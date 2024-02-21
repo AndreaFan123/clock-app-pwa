@@ -10,7 +10,45 @@ This is a clock app that shows the current time and date based on the location. 
 
 - React TS
 - CSS
+- Jest
+- SWR
+
+## API's
+
 - [World Time](http://worldtimeapi.org/) API
 - [IP Geolocation](https://ipbase.com/) API
 - [Quote](https://github.com/lukePeavey/quotable) API
-- Jest
+
+## Features
+
+- [ ] Show current time and date.
+- [ ] Show location / timezone.
+- [ ] Show day or night background.
+- [ ] Show more information.
+  - [ ] A button to expend more information of day of the year, day of the week, week number.
+- [ ] Show a random quote.
+  - [ ] A icon to refresh the quote.
+
+## Installation
+
+```bash
+git clone
+```
+
+```bash
+cd clock-app
+```
+
+```bash
+npm install
+
+# or
+yarn install
+
+# or
+pnpm install
+```
+
+```bash
+npm start
+```
