@@ -29,6 +29,13 @@ This is a clock app that shows the current time and date based on the location. 
 - [ ] Show a random quote.
   - [ ] A icon to refresh the quote.
 
+## Flow
+
+### Time and Date
+
+1. Get the user location as we need country or continent as parameter for fetching the World Time API.
+2. After fetching the information, we will get the current time and date.
+
 ## Installation
 
 ```bash
