@@ -1,21 +1,101 @@
-import useSWR from "swr";
+import { useEffect, useState } from "react";
+import useSWR, { mutate } from "swr";
+import dayTimeBG from "./assets/desktop/bg-image-daytime.jpg";
+import nightTimeBG from "./assets/desktop/bg-image-nighttime.jpg";
+import sunIcon from "./assets/desktop/icon-sun.svg";
+import moonIcon from "./assets/desktop/icon-moon.svg";
+import refreshIcon from "./assets/desktop/icon-refresh.svg";
+
+import "./App.css";
 
 function App() {
-  const fetcher = (url: string) => fetch(url).then((res) => res.json());
-  const { data, error, isLoading } = useSWR(
-    "http://worldtimeapi.org/api/timezone/Asia/Taipei",
-    fetcher
+  const [location, setLocation] = useState({ latitude: 0, longitude: 0 });
+  const time = new Date().getHours();
+  const isDayTime = time > 6 && time < 18;
+  const greetingBG = isDayTime ? dayTimeBG : nightTimeBG;
+  const greetingText = isDayTime
+    ? "GOOD MORNING, IT’S CURRENTLY"
+    : "GOOD EVENING, IT’S CURRENTLY";
+  const timeIcon = isDayTime ? sunIcon : moonIcon;
+  const geoApiUrl = import.meta.env.VITE_OPENCAGEURL;
+  const geoApiKey = import.meta.env.VITE_OPENCAGEAPIKEY;
+  const geoFullUrl = location
+    ? `${geoApiUrl}${location.latitude}%2C${location.longitude}&key=${geoApiKey}`
+    : null;
+  const quoteApiUrl = import.meta.env.VITE_QUOTEURL;
+  const geoFetcher = (url: string) => fetch(url).then((res) => res.json());
+  const quoteFetcher = (url: string) => fetch(url).then((res) => res.json());
+  const { data: geoInfo, error: geoInfoErrpr } = useSWR(geoFullUrl, geoFetcher);
+  const { data: quoteInfo, error: quoteError } = useSWR(
+    quoteApiUrl,
+    quoteFetcher
   );
 
-  if (error) return "An error has occurred.";
-  if (isLoading) return "Loading...";
+  const getLocation = () => {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        try {
+          setLocation({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          });
+        } catch (error) {
+          alert(error);
+        }
+      });
+    } else {
+      console.log("Geolocation is not available");
+    }
+  };
 
-  console.log(data);
+  const handleRefreshQuote = () => {
+    mutate(quoteApiUrl);
+  };
+
+  useEffect(() => {
+    getLocation();
+  }, []);
+
   return (
-    <div>
-      <h1>Hello World</h1>
-    </div>
+    <>
+      <header className="bg__container">
+        <img src={greetingBG} alt="background" />
+      </header>
+      <main className="mainContent__container">
+        <div className="mainContent__container-quote">
+          {quoteInfo ? (
+            <>
+              <div className="mainContent__quote-texts">
+                <p>"{quoteInfo.content}"</p>
+                <span>{quoteInfo.author}</span>
+              </div>
+              <button
+                type="button"
+                className="mainContent__quote-refreshBtn"
+                onClick={handleRefreshQuote}
+              >
+                <img
+                  src={refreshIcon}
+                  alt="Refresh icon, click to refresh quote"
+                />
+              </button>
+            </>
+          ) : (
+            <p>Loading quote...</p>
+          )}
+        </div>
+        <div className="mainContent__container-greeting">
+          <img src={timeIcon} alt="time icon" />
+          <span>{greetingText}</span>
+        </div>
+      </main>
+    </>
   );
 }
 
 export default App;
+
+// 拿到資料
+// 透過 time API 拿到時間並判斷是白天還是晚上（如果白天顯示白天背景，晚上顯示晚上背景）
+// 透過 openCage API 拿到地理位置資料
+// 拿到城市名稱
