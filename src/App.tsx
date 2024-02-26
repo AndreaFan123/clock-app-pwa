@@ -56,6 +56,8 @@ function App() {
     getLocation();
   }, []);
 
+  console.log(geoInfo);
+
   return (
     <>
       <header className="bg__container">
@@ -65,20 +67,22 @@ function App() {
         <div className="mainContent__container-quote">
           {quoteInfo ? (
             <>
-              <div className="mainContent__quote-texts">
-                <p>"{quoteInfo.content}"</p>
+              <div className="mainContent__quote-container">
+                <div className="mainContent__quote-content">
+                  <p>"{quoteInfo.content}"</p>
+                  <button
+                    type="button"
+                    className="mainContent__quote-refreshBtn"
+                    onClick={handleRefreshQuote}
+                  >
+                    <img
+                      src={refreshIcon}
+                      alt="Refresh icon, click to refresh quote"
+                    />
+                  </button>
+                </div>
                 <span>{quoteInfo.author}</span>
               </div>
-              <button
-                type="button"
-                className="mainContent__quote-refreshBtn"
-                onClick={handleRefreshQuote}
-              >
-                <img
-                  src={refreshIcon}
-                  alt="Refresh icon, click to refresh quote"
-                />
-              </button>
             </>
           ) : (
             <p>Loading quote...</p>
@@ -94,8 +98,3 @@ function App() {
 }
 
 export default App;
-
-// 拿到資料
-// 透過 time API 拿到時間並判斷是白天還是晚上（如果白天顯示白天背景，晚上顯示晚上背景）
-// 透過 openCage API 拿到地理位置資料
-// 拿到城市名稱

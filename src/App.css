@@ -7,6 +7,10 @@
     height: 100%;
     object-fit: cover;
     filter: brightness(0.5);
+
+    @media (max-width: 768px) {
+      height: 100vh;
+    }
   }
 }
 
@@ -28,10 +32,21 @@
     align-items: baseline;
     text-wrap: wrap;
 
-    .mainContent__quote-texts {
+    .mainContent__quote-container {
       display: flex;
       flex-direction: column;
       gap: 32px;
+
+      .mainContent__quote-content {
+        display: flex;
+        align-items: baseline;
+
+        p {
+          font-size: 1.8rem;
+          line-height: 1.5;
+          letter-spacing: 0.5px;
+        }
+      }
 
       span {
         font-weight: 700;
@@ -54,8 +69,8 @@
     gap: 16px;
 
     span {
-      font-size: 2rem;
-      letter-spacing: 20;
+      font-size: 3rem;
+      letter-spacing: 4px;
     }
   }
 }
