@@ -40,11 +40,16 @@
       .mainContent__quote-content {
         display: flex;
         align-items: baseline;
+        gap: 5px;
 
         p {
           font-size: 1.8rem;
           line-height: 1.5;
           letter-spacing: 0.5px;
+        }
+
+        @media screen and (max-width: 768px) {
+          gap: 10px;
         }
       }
 
@@ -58,6 +63,10 @@
       background-color: transparent;
       border: none;
     }
+
+    @media (max-width: 768px) {
+      padding: 1rem 3rem;
+    }
   }
 
   .mainContent__container-greeting {
@@ -65,12 +74,74 @@
     top: 50%;
     color: white;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: start;
     gap: 16px;
 
-    span {
+    .mainContent__container-text {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+
+      img {
+        width: 25px;
+        height: 25px;
+
+        @media (max-width: 768px) {
+          width: 18px;
+          height: 18px;
+        }
+      }
+    }
+
+    .mainContent__container-greetingMobile,
+    .mainContent__container-greetingDesktop {
       font-size: 3rem;
       letter-spacing: 4px;
+
+      @media screen and (max-width: 768px) {
+        font-size: 1.5rem;
+      }
     }
+
+    .mainContent__container-greetingDesktop {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      padding: 0 3rem;
+    }
+
+    @media (min-width: 768px) {
+      .mainContent__container-greetingMobile {
+        display: none;
+      }
+
+      .mainContent__container-greetingDesktop {
+        display: block;
+      }
+    }
+  }
+
+  .mainContent__container-time {
+    display: flex;
+    align-items: end;
+    gap: 10px;
+
+    .mainContent__container-timeText {
+      font-size: 10rem;
+      font-weight: 900;
+    }
+
+    .mainContent__container-timeZone {
+      font-size: 2rem;
+      font-weight: 400;
+      margin-bottom: 20px;
+    }
+  }
+
+  .mainContent__container-location {
+    font-size: 2.5rem;
+    font-weight: 700;
   }
 }

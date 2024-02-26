@@ -13,9 +13,10 @@ function App() {
   const time = new Date().getHours();
   const isDayTime = time > 6 && time < 18;
   const greetingBG = isDayTime ? dayTimeBG : nightTimeBG;
-  const greetingText = isDayTime
+  const greetingTextDesktop = isDayTime
     ? "GOOD MORNING, IT’S CURRENTLY"
     : "GOOD EVENING, IT’S CURRENTLY";
+  const greetingTextMobile = isDayTime ? "GOOD MORNING" : "GOOD EVENING";
   const timeIcon = isDayTime ? sunIcon : moonIcon;
   const geoApiUrl = import.meta.env.VITE_OPENCAGEURL;
   const geoApiKey = import.meta.env.VITE_OPENCAGEAPIKEY;
@@ -25,11 +26,22 @@ function App() {
   const quoteApiUrl = import.meta.env.VITE_QUOTEURL;
   const geoFetcher = (url: string) => fetch(url).then((res) => res.json());
   const quoteFetcher = (url: string) => fetch(url).then((res) => res.json());
-  const { data: geoInfo, error: geoInfoErrpr } = useSWR(geoFullUrl, geoFetcher);
+  const { data: geoInfo, error: geoError } = useSWR(geoFullUrl, geoFetcher);
   const { data: quoteInfo, error: quoteError } = useSWR(
     quoteApiUrl,
     quoteFetcher
   );
+
+  // without pm or am
+  const currentTime = new Date().toLocaleTimeString("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
+  const formattedTime = currentTime.slice(0, -3);
+  const timeZone = geoInfo && geoInfo.timestamp.created_http.split(" ")[5];
+  const city = geoInfo && geoInfo.results[0].components.city;
+  const country = geoInfo && geoInfo.results[0].components.country_code;
 
   const getLocation = () => {
     if ("geolocation" in navigator) {
@@ -56,7 +68,7 @@ function App() {
     getLocation();
   }, []);
 
-  console.log(geoInfo);
+  console.log("city", city);
 
   return (
     <>
@@ -89,8 +101,34 @@ function App() {
           )}
         </div>
         <div className="mainContent__container-greeting">
-          <img src={timeIcon} alt="time icon" />
-          <span>{greetingText}</span>
+          <div className="mainContent__container-text">
+            <img src={timeIcon} alt="time icon" />
+            <span className="mainContent__container-greetingMobile">
+              {greetingTextMobile}
+            </span>
+            <span className="mainContent__container-greetingDesktop">
+              {greetingTextDesktop}
+            </span>
+          </div>
+          {geoInfo ? (
+            <>
+              <div className="mainContent__container-time">
+                <span className="mainContent__container-timeText">
+                  {formattedTime}
+                </span>
+                <span className="mainContent__container-timeZone">
+                  {timeZone}
+                </span>
+              </div>
+              <div className="mainContent__container-location">
+                <span>
+                  IN {city}, {country.toUpperCase()}
+                </span>
+              </div>
+            </>
+          ) : (
+            <span>Loading time...</span>
+          )}
         </div>
       </main>
     </>
