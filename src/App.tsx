@@ -3,11 +3,12 @@ import dayTimeBG from "../public/asset/desktop/bg-image-daytime.jpg";
 import nightTimeBG from "../public/asset/desktop/bg-image-nighttime.jpg";
 import afternoonBG from "../public/asset/desktop/bg-image-afternoon.jpg";
 import refreshIcon from "../public/asset/icon-refresh.svg";
+import sunIcon from "../public/asset/icon-sun.svg";
+import moonIcon from "../public/asset/icon-moon.svg";
 
-import "./App.css";
 import { QuoteDataType, TimezoneDataTypes } from "./types/type";
 
-// https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=37.42159&longitude=-122.0837&localityLanguage=en
+import "./App.css";
 
 function App() {
   const geoApiUrl = import.meta.env.VITE_BIGDATACLOUD;
@@ -134,6 +135,14 @@ function App() {
     }
   };
 
+  const updateIcon = () => {
+    if (dayTime || afternoon) {
+      return sunIcon;
+    } else {
+      return moonIcon;
+    }
+  };
+
   useEffect(() => {
     if (dayTime) {
       setGreetingText({
@@ -163,37 +172,47 @@ function App() {
         {timeData ? (
           <img src={updateBG()} alt="background" />
         ) : (
+          // Add a loader in the center of the page
           <p>Loading...</p>
         )}
       </header>
       <main className="mainContent__container">
-        <div className="mainContent__container-quote">
+        <div className="mainContent__quote-container">
           {quote ? (
             <>
               <div className="mainContent__quote-texts">
                 <p>"{quote.content}"</p>
-                <span>{quote.author}</span>
+                <button type="button" onClick={handleRefreshQuote}>
+                  <img
+                    src={refreshIcon}
+                    alt="Refresh icon, click to refresh quote"
+                  />
+                </button>
               </div>
-              <button
-                type="button"
-                className="mainContent__quote-refreshBtn"
-                onClick={handleRefreshQuote}
-              >
-                <img
-                  src={refreshIcon}
-                  alt="Refresh icon, click to refresh quote"
-                />
-              </button>
+              <span>{quote.author}</span>
             </>
           ) : (
             <p>Loading quote...</p>
           )}
         </div>
         <div className="mainContent__container-greeting">
-          {/* <img src={timeIcon} alt="time icon" /> */}
-          <span>{greetingText.fullTexts}</span>
-          <span>{formattedTime}</span>
-          <span>{location.city}</span>
+          <div className="mainContent__greeting-textIcon">
+            <img src={updateIcon()} alt="time icon" />
+            <span className="mainContent__greeting-mobileText">
+              {greetingText.shortTexts}
+            </span>
+            <span className="mainContent__greeting-desktopText">
+              {greetingText.fullTexts}
+            </span>
+          </div>
+          <div className="mainContent__timeLocation-container">
+            <span className="mainContent__timeLocation-time">
+              {formattedTime}
+            </span>
+            <span className="mainContent__timeLocation-location">
+              in {location.city}, {location.country}
+            </span>
+          </div>
         </div>
       </main>
     </>
