@@ -4,13 +4,9 @@
 
   img {
     width: 100%;
-    height: 100%;
+    height: 100vh;
     object-fit: cover;
     filter: brightness(0.5);
-
-    @media (max-width: 768px) {
-      height: 100vh;
-    }
   }
 }
 
@@ -19,7 +15,7 @@
   max-width: 1100px;
   margin: 0 auto;
 
-  .mainContent__container-quote {
+  .mainContent__quote-container {
     width: 100%;
     max-width: 540px;
     position: absolute;
@@ -28,102 +24,135 @@
     font-size: 1.8rem;
     margin-top: 56px;
     display: flex;
-    gap: 10px;
+    flex-direction: column;
+    gap: 24px;
     align-items: baseline;
     text-wrap: wrap;
 
-    .mainContent__quote-container {
+    .mainContent__quote-texts {
       display: flex;
-      flex-direction: column;
-      gap: 32px;
+      align-items: baseline;
+      gap: 5px;
 
-      .mainContent__quote-content {
-        display: flex;
-        align-items: baseline;
-        gap: 5px;
+      p {
+        display: block;
+        font-size: 1.8rem;
+        line-height: 1.5;
+        letter-spacing: 0.5px;
+      }
 
-        p {
-          font-size: 1.8rem;
-          line-height: 1.5;
-          letter-spacing: 0.5px;
-        }
+      button {
+        background-color: transparent;
+        border: none;
+        color: white;
+        font-size: 1.8rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: color 0.3s;
 
-        @media screen and (max-width: 768px) {
-          gap: 10px;
+        &:hover {
+          color: #f2f2f2;
         }
       }
 
-      span {
-        font-weight: 700;
+      @media screen and (max-width: 768px) {
+        gap: 10px;
       }
     }
 
-    .mainContent__quote-refreshBtn {
-      cursor: pointer;
-      background-color: transparent;
-      border: none;
+    span {
+      display: block;
+      font-weight: 700;
     }
 
     @media (max-width: 768px) {
       padding: 1rem 3rem;
     }
+
+    @media (max-width: 1100px) {
+      max-width: 600px;
+      padding: 2rem 4rem;
+    }
   }
 
   .mainContent__container-greeting {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
     position: absolute;
     top: 50%;
     color: white;
     display: flex;
     flex-direction: column;
     align-items: start;
-    gap: 16px;
+    gap: 10px;
 
-    .mainContent__container-text {
+    .mainContent__greeting-textIcon {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 8px;
 
-      img {
-        width: 25px;
-        height: 25px;
+      .mainContent__greeting-desktopText {
+        font-size: 2.5rem;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
 
         @media (max-width: 768px) {
-          width: 18px;
-          height: 18px;
+          display: none;
+        }
+      }
+
+      .mainContent__greeting-mobileText {
+        font-size: 2rem;
+        font-weight: 400;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+
+        @media (min-width: 768px) {
+          display: none;
+        }
+      }
+
+      img {
+        width: 26px;
+        height: 26px;
+
+        @media (max-width: 768px) {
+          width: 20px;
+          height: 20px;
         }
       }
     }
 
-    .mainContent__container-greetingMobile,
-    .mainContent__container-greetingDesktop {
-      font-size: 3rem;
-      letter-spacing: 4px;
+    .mainContent__timeLocation-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
 
-      @media screen and (max-width: 768px) {
-        font-size: 1.5rem;
+      .mainContent__timeLocation-time {
+        font-size: 12rem;
+        font-weight: 800;
       }
-    }
 
-    .mainContent__container-greetingDesktop {
-      display: none;
+      .mainContent__timeLocation-location {
+        font-size: 2.5rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
     }
 
     @media (max-width: 768px) {
-      padding: 0 3rem;
+      padding: 1rem 3rem;
     }
 
-    @media (min-width: 768px) {
-      .mainContent__container-greetingMobile {
-        display: none;
-      }
-
-      .mainContent__container-greetingDesktop {
-        display: block;
-      }
+    @media (max-width: 1100px) {
+      padding: 2rem 4rem;
     }
   }
 
-  .mainContent__container-time {
+  /* .mainContent__container-time {
     display: flex;
     align-items: end;
     gap: 10px;
@@ -143,5 +172,5 @@
   .mainContent__container-location {
     font-size: 2.5rem;
     font-weight: 700;
-  }
+  } */
 }
