@@ -10,6 +10,7 @@ import "./App.css";
 import { Quote } from "./components/Quote";
 import { TimeAndLocation } from "./components/TimeAndLocation";
 import { ToggleButton } from "./components/ToggleButton";
+import { ExpendInfo } from "./components/ExpendInfo";
 
 function App() {
   const geoApiUrl = import.meta.env.VITE_BIGDATACLOUD;
@@ -176,21 +177,34 @@ function App() {
     <>
       <header className="bg__container">
         {timeData ? (
-          <img src={updateBG()} alt="background" />
+          <img
+            src={updateBG()}
+            alt="background"
+            style={{
+              filter:
+                dayTime || afternoon ? "brightness(0.5)" : "brightness(0.8)",
+            }}
+          />
         ) : (
           // Add a loader in the center of the page
           <p>Loading...</p>
         )}
       </header>
       <main className="mainContent__container">
-        <div className="mainContent__quote-container">
-          {quote ? (
-            <Quote quote={quote} handleRefreshQuote={handleRefreshQuote} />
-          ) : (
-            <p>Loading quote...</p>
-          )}
-        </div>
-        <div className="mainContent__container-greeting">
+        {!showMore ? (
+          <section className="mainContent__quote-container">
+            {quote ? (
+              <Quote quote={quote} handleRefreshQuote={handleRefreshQuote} />
+            ) : (
+              <p>Loading quote...</p>
+            )}
+          </section>
+        ) : null}
+
+        <section
+          className="mainContent__container-greeting"
+          style={{ top: showMore ? "15%" : "60%" }}
+        >
           <TimeAndLocation
             fullTexts={greetingText.fullTexts}
             shortTexts={greetingText.shortTexts}
@@ -200,11 +214,92 @@ function App() {
             city={location.city}
             icon={updateIcon()}
           />
-          <div>
-            <ToggleButton onShowMore={handleShowMore} showMore={showMore} />
-          </div>
-        </div>
+          {timeData ? (
+            <div className="expendMore__container">
+              <ToggleButton onShowMore={handleShowMore} showMore={showMore} />
+            </div>
+          ) : null}
+        </section>
       </main>
+      {timeData && showMore ? (
+        <div
+          className="expendInfo__container-table"
+          style={{
+            backgroundColor: dayTime || afternoon ? "#888" : "#000",
+            transform: showMore ? "translateY(0)" : "translateY(100%)",
+          }}
+        >
+          <span></span>
+          <ExpendInfo
+            currentTimezone={timeData.timezone}
+            dayOfYear={timeData.day_of_year}
+            dayOfWeek={timeData.day_of_week}
+            weekNumber={timeData.week_number}
+            dayTime={dayTime}
+            afternoon={afternoon}
+          />
+          {/* <table>
+            <tbody>
+              <tr>
+                <td
+                  className="expendInfo__td-title"
+                  style={{ color: dayTime || afternoon ? "#999" : "#fff" }}
+                >
+                  current timezone
+                </td>
+                <td
+                  className="expendInfo__td-description"
+                  style={{ color: dayTime || afternoon ? "#000" : "#fff" }}
+                >
+                  {timeData.timezone}
+                </td>
+              </tr>
+              <tr>
+                <td
+                  className="expendInfo__td-title"
+                  style={{ color: dayTime || afternoon ? "#999" : "#fff" }}
+                >
+                  Day of the year
+                </td>
+                <td
+                  className="expendInfo__td-description"
+                  style={{ color: dayTime || afternoon ? "#000" : "#fff" }}
+                >
+                  {timeData.day_of_year}
+                </td>
+              </tr>
+              <tr>
+                <td
+                  className="expendInfo__td-title"
+                  style={{ color: dayTime || afternoon ? "#999" : "#fff" }}
+                >
+                  Day of the week
+                </td>
+                <td
+                  className="expendInfo__td-description"
+                  style={{ color: dayTime || afternoon ? "#000" : "#fff" }}
+                >
+                  {timeData.day_of_week}
+                </td>
+              </tr>
+              <tr>
+                <td
+                  className="expendInfo__td-title"
+                  style={{ color: dayTime || afternoon ? "#999" : "#fff" }}
+                >
+                  Week number
+                </td>
+                <td
+                  className="expendInfo__td-description"
+                  style={{ color: dayTime || afternoon ? "#000" : "#fff" }}
+                >
+                  {timeData.week_number}
+                </td>
+              </tr>
+            </tbody>
+          </table> */}
+        </div>
+      ) : null}
     </>
   );
 }
