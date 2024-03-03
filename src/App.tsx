@@ -2,18 +2,20 @@ import { useEffect, useMemo, useState } from "react";
 import dayTimeBG from "../public/asset/desktop/bg-image-daytime.jpg";
 import nightTimeBG from "../public/asset/desktop/bg-image-nighttime.jpg";
 import afternoonBG from "../public/asset/desktop/bg-image-afternoon.jpg";
-import refreshIcon from "../public/asset/icon-refresh.svg";
 import sunIcon from "../public/asset/icon-sun.svg";
 import moonIcon from "../public/asset/icon-moon.svg";
-
 import { QuoteDataType, TimezoneDataTypes } from "./types/type";
 
 import "./App.css";
+import { Quote } from "./components/Quote";
+import { TimeAndLocation } from "./components/TimeAndLocation";
+import { ToggleButton } from "./components/ToggleButton";
 
 function App() {
   const geoApiUrl = import.meta.env.VITE_BIGDATACLOUD;
   const timeApiUrl = import.meta.env.VITE_WORLDTIME;
   const quoteApiUrl = import.meta.env.VITE_QUOTEURL;
+  const [showMore, setShowMore] = useState(false);
   const [coords, setCoords] = useState({
     latitude: 0,
     longitude: 0,
@@ -166,6 +168,10 @@ function App() {
     getQuote();
   };
 
+  const handleShowMore = () => {
+    setShowMore(!showMore);
+  };
+
   return (
     <>
       <header className="bg__container">
@@ -179,39 +185,23 @@ function App() {
       <main className="mainContent__container">
         <div className="mainContent__quote-container">
           {quote ? (
-            <>
-              <div className="mainContent__quote-texts">
-                <p>"{quote.content}"</p>
-                <button type="button" onClick={handleRefreshQuote}>
-                  <img
-                    src={refreshIcon}
-                    alt="Refresh icon, click to refresh quote"
-                  />
-                </button>
-              </div>
-              <span>{quote.author}</span>
-            </>
+            <Quote quote={quote} handleRefreshQuote={handleRefreshQuote} />
           ) : (
             <p>Loading quote...</p>
           )}
         </div>
         <div className="mainContent__container-greeting">
-          <div className="mainContent__greeting-textIcon">
-            <img src={updateIcon()} alt="time icon" />
-            <span className="mainContent__greeting-mobileText">
-              {greetingText.shortTexts}
-            </span>
-            <span className="mainContent__greeting-desktopText">
-              {greetingText.fullTexts}
-            </span>
-          </div>
-          <div className="mainContent__timeLocation-container">
-            <span className="mainContent__timeLocation-time">
-              {formattedTime}
-            </span>
-            <span className="mainContent__timeLocation-location">
-              in {location.city}, {location.country}
-            </span>
+          <TimeAndLocation
+            fullTexts={greetingText.fullTexts}
+            shortTexts={greetingText.shortTexts}
+            formattedTime={formattedTime}
+            timeZone={timeData?.abbreviation}
+            country={location.country}
+            city={location.city}
+            icon={updateIcon()}
+          />
+          <div>
+            <ToggleButton onShowMore={handleShowMore} showMore={showMore} />
           </div>
         </div>
       </main>
