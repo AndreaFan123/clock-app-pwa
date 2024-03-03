@@ -1,5 +1,3 @@
-import { TimezoneDataTypes } from "../types/type";
-
 interface TimezoneDataTypes {
   currentTimezone: string;
   dayOfYear: number;
