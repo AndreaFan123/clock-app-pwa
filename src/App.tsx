@@ -186,14 +186,15 @@ function App() {
             }}
           />
         ) : (
-          // Add a loader in the center of the page
-          <p>Loading...</p>
+          <div className="bg__container-loader">
+            <p>Loading...</p>
+          </div>
         )}
       </header>
       <main className="mainContent__container">
         {!showMore ? (
           <section className="mainContent__quote-container">
-            {quote ? (
+            {timeData && quote ? (
               <Quote quote={quote} handleRefreshQuote={handleRefreshQuote} />
             ) : (
               <p>Loading quote...</p>
@@ -225,7 +226,7 @@ function App() {
         <div
           className="expendInfo__container-table"
           style={{
-            backgroundColor: dayTime || afternoon ? "#888" : "#000",
+            backgroundColor: dayTime ? "#fff" : "#000",
             transform: showMore ? "translateY(0)" : "translateY(100%)",
           }}
         >
