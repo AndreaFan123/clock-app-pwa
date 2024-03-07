@@ -4,7 +4,6 @@ interface TimezoneDataTypes {
   dayOfWeek: number;
   weekNumber: number;
   dayTime: boolean;
-  afternoon: boolean;
 }
 
 export const ExpendInfo = ({
@@ -12,7 +11,6 @@ export const ExpendInfo = ({
   dayOfYear,
   dayOfWeek,
   weekNumber,
-  afternoon,
   dayTime,
 }: TimezoneDataTypes) => {
   return (

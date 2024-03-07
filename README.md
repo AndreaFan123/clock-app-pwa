@@ -11,7 +11,7 @@ This is a clock app that shows the current time and date based on the location. 
 - React TS
 - CSS
 - Jest
-- SWR
+- vite
 
 ## API's
 
@@ -21,20 +21,13 @@ This is a clock app that shows the current time and date based on the location. 
 
 ## Features
 
-- [ ] Show current time and date.
-- [ ] Show location / timezone.
-- [ ] Show day or night background.
-- [ ] Show more information.
-  - [ ] A button to expend more information of day of the year, day of the week, week number.
-- [ ] Show a random quote.
-  - [ ] A icon to refresh the quote.
-
-## Flow
-
-### Time and Date
-
-1. Get the user location as we need country or continent as parameter for fetching the World Time API.
-2. After fetching the information, we will get the current time and date.
+- [x] Show current time and date.
+- [x] Show location / timezone.
+- [x] Show day or night background.
+- [x] Show more information.
+  - [x] A button to expend more information of day of the year, day of the week, week number.
+- [x] Show a random quote.
+  - [x] A icon to refresh the quote.
 
 ## Installation
 
@@ -59,3 +52,11 @@ pnpm install
 ```bash
 npm start
 ```
+
+## Testing
+
+1. To test if geoLocation is working when the app is loaded.
+2. To test if background is changing based on the time of the day.
+3. To test if the quote is fetching a new quote when the refresh button is clicked.
+4. To test the toggle button is working.
+5. To test if the time and location is showing correctly.

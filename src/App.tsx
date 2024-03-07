@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import dayTimeBG from "../public/asset/desktop/bg-image-daytime.jpg";
 import nightTimeBG from "../public/asset/desktop/bg-image-nighttime.jpg";
 import afternoonBG from "../public/asset/desktop/bg-image-afternoon.jpg";
@@ -252,7 +252,6 @@ function App() {
             dayOfWeek={timeData.day_of_week}
             weekNumber={timeData.week_number}
             dayTime={dayTime}
-            afternoon={afternoon}
           />
         </div>
       )}
