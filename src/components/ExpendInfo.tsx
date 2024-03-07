@@ -21,13 +21,13 @@ export const ExpendInfo = ({
         <tr>
           <td
             className="expendInfo__td-title"
-            style={{ color: dayTime || afternoon ? "#999" : "#fff" }}
+            style={{ color: dayTime ? "#999" : "#fff" }}
           >
             current timezone
           </td>
           <td
             className="expendInfo__td-description"
-            style={{ color: dayTime || afternoon ? "#000" : "#fff" }}
+            style={{ color: dayTime ? "#000" : "#fff" }}
           >
             {currentTimezone}
           </td>
@@ -35,13 +35,13 @@ export const ExpendInfo = ({
         <tr>
           <td
             className="expendInfo__td-title"
-            style={{ color: dayTime || afternoon ? "#999" : "#fff" }}
+            style={{ color: dayTime ? "#999" : "#fff" }}
           >
             Day of the year
           </td>
           <td
             className="expendInfo__td-description"
-            style={{ color: dayTime || afternoon ? "#000" : "#fff" }}
+            style={{ color: dayTime ? "#000" : "#fff" }}
           >
             {dayOfYear}
           </td>
@@ -49,13 +49,13 @@ export const ExpendInfo = ({
         <tr>
           <td
             className="expendInfo__td-title"
-            style={{ color: dayTime || afternoon ? "#999" : "#fff" }}
+            style={{ color: dayTime ? "#999" : "#fff" }}
           >
             Day of the week
           </td>
           <td
             className="expendInfo__td-description"
-            style={{ color: dayTime || afternoon ? "#000" : "#fff" }}
+            style={{ color: dayTime ? "#000" : "#fff" }}
           >
             {dayOfWeek}
           </td>
@@ -63,13 +63,13 @@ export const ExpendInfo = ({
         <tr>
           <td
             className="expendInfo__td-title"
-            style={{ color: dayTime || afternoon ? "#999" : "#fff" }}
+            style={{ color: dayTime ? "#999" : "#fff" }}
           >
             Week number
           </td>
           <td
             className="expendInfo__td-description"
-            style={{ color: dayTime || afternoon ? "#000" : "#fff" }}
+            style={{ color: dayTime ? "#000" : "#fff" }}
           >
             {weekNumber}
           </td>
