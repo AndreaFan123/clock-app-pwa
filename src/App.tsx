@@ -131,9 +131,13 @@ function App() {
   const updateBG = () => {
     if (dayTime) {
       return dayTimeBG;
-    } else if (afternoon) {
+    }
+
+    if (afternoon) {
       return afternoonBG;
-    } else if (nightTime) {
+    }
+
+    if (nightTime) {
       return nightTimeBG;
     }
   };
@@ -141,28 +145,38 @@ function App() {
   const updateIcon = () => {
     if (dayTime || afternoon) {
       return sunIcon;
-    } else {
+    }
+
+    if (nightTime) {
       return moonIcon;
     }
   };
 
-  useEffect(() => {
+  const updateGreeting = () => {
     if (dayTime) {
       setGreetingText({
         fullTexts: "Good Morning, it's currently",
         shortTexts: "Good Morning",
       });
-    } else if (afternoon) {
+    }
+
+    if (afternoon) {
       setGreetingText({
         fullTexts: "Good Afternoon, it's currently",
         shortTexts: "Good Afternoon",
       });
-    } else if (nightTime) {
+    }
+
+    if (nightTime) {
       setGreetingText({
         fullTexts: "Good Evening, it's currently",
         shortTexts: "Good Evening",
       });
     }
+  };
+
+  useEffect(() => {
+    updateGreeting();
   }, [dayTime, afternoon, nightTime]);
 
   const handleRefreshQuote = () => {
@@ -175,8 +189,8 @@ function App() {
 
   return (
     <>
-      <header className="bg__container">
-        {timeData ? (
+      {timeData ? (
+        <header className="bg__container">
           <img
             src={updateBG()}
             alt="background"
@@ -185,44 +199,45 @@ function App() {
                 dayTime || afternoon ? "brightness(0.5)" : "brightness(0.8)",
             }}
           />
-        ) : (
-          <div className="bg__container-loader">
-            <p>Loading...</p>
-          </div>
-        )}
-      </header>
-      <main className="mainContent__container">
-        {!showMore ? (
-          <section className="mainContent__quote-container">
-            {timeData && quote ? (
-              <Quote quote={quote} handleRefreshQuote={handleRefreshQuote} />
-            ) : (
-              <p>Loading quote...</p>
-            )}
-          </section>
-        ) : null}
+        </header>
+      ) : (
+        <header className="bg__container-loader">
+          <span className="loader"></span>
+        </header>
+      )}
+      {timeData ? (
+        <main className="mainContent__container">
+          {!showMore ? (
+            <section className="mainContent__quote-container">
+              {timeData && quote ? (
+                <Quote quote={quote} handleRefreshQuote={handleRefreshQuote} />
+              ) : (
+                <p>Loading quote...</p>
+              )}
+            </section>
+          ) : null}
 
-        <section
-          className="mainContent__container-greeting"
-          style={{ top: showMore ? "15%" : "60%" }}
-        >
-          <TimeAndLocation
-            fullTexts={greetingText.fullTexts}
-            shortTexts={greetingText.shortTexts}
-            formattedTime={formattedTime}
-            timeZone={timeData?.abbreviation}
-            country={location.country}
-            city={location.city}
-            icon={updateIcon()}
-          />
-          {timeData ? (
+          <section
+            className="mainContent__container-greeting"
+            style={{ top: showMore ? "15%" : "60%" }}
+          >
+            <TimeAndLocation
+              fullTexts={greetingText.fullTexts}
+              shortTexts={greetingText.shortTexts}
+              formattedTime={formattedTime}
+              timeZone={timeData?.abbreviation}
+              country={location.country}
+              city={location.city}
+              icon={updateIcon() as string}
+            />
+
             <div className="expendMore__container">
               <ToggleButton onShowMore={handleShowMore} showMore={showMore} />
             </div>
-          ) : null}
-        </section>
-      </main>
-      {timeData && showMore ? (
+          </section>
+        </main>
+      ) : null}
+      {timeData && showMore && (
         <div
           className="expendInfo__container-table"
           style={{
@@ -240,7 +255,7 @@ function App() {
             afternoon={afternoon}
           />
         </div>
-      ) : null}
+      )}
     </>
   );
 }
