@@ -219,7 +219,7 @@ function App() {
 
           <section
             className="mainContent__container-greeting"
-            style={{ top: showMore ? "15%" : "60%" }}
+            style={{ top: showMore ? "10%" : "40%" }}
           >
             <TimeAndLocation
               fullTexts={greetingText.fullTexts}
