@@ -1,5 +1,5 @@
 import "../App.css";
-import arrowIcon from "../../public/asset/icon-arrow-down.svg";
+import arrowIcon from "../asset/icon-arrow-down.svg";
 
 interface ToggleButtonProps {
   onShowMore: () => void;

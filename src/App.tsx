@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import dayTimeBG from "../public/asset/desktop/bg-image-daytime.jpg";
-import nightTimeBG from "../public/asset/desktop/bg-image-nighttime.jpg";
-import afternoonBG from "../public/asset/desktop/bg-image-afternoon.jpg";
-import sunIcon from "../public/asset/icon-sun.svg";
-import moonIcon from "../public/asset/icon-moon.svg";
+import dayTimeBG from "./asset/desktop/bg-image-daytime.jpg";
+import nightTimeBG from "./asset/desktop/bg-image-nighttime.jpg";
+import afternoonBG from "./asset/desktop/bg-image-afternoon.jpg";
+import sunIcon from "./asset/icon-sun.svg";
+import moonIcon from "./asset/icon-moon.svg";
 import { QuoteDataType, TimezoneDataTypes } from "./types/type";
 
 import "./App.css";

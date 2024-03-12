@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import { VitePWA, VitePWAOptions } from "vite-plugin-pwa";
 import react from "@vitejs/plugin-react";
+import { loadEnv } from "vite";
 
 const manifestForPlugin: Partial<VitePWAOptions> = {
   registerType: "prompt",
@@ -43,6 +44,18 @@ const manifestForPlugin: Partial<VitePWAOptions> = {
 };
 
 // https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [react(), VitePWA(manifestForPlugin)],
+export default defineConfig(({ command, mode }) => {
+  const env = loadEnv(mode, process.cwd(), "");
+  return {
+    plugins: [react()],
+    server: {
+      host: true,
+    },
+    define: {
+      "process.env.YOUR_STRING_VARIABLE": JSON.stringify(
+        env.YOUR_STRING_VARIABLE
+      ),
+      "process.env.APP_USE_AVT": env.APP_USE_AVT,
+    },
+  };
 });

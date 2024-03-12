@@ -1,4 +1,4 @@
-import refreshIcon from "../../public/asset/icon-refresh.svg";
+import refreshIcon from "../asset/icon-refresh.svg";
 import { QuoteDataType } from "../types/type";
 import "../App.css";
 
