@@ -7,9 +7,9 @@ const manifestForPlugin: Partial<VitePWAOptions> = {
   registerType: "prompt",
   includeAssets: ["favicon.ico", "apple-touch-icon.png", "masked-icon.svg"],
   manifest: {
-    name: "Weather Ups",
-    short_name: "Weathe Ups",
-    description: "An app that can show weather forecast for your city.",
+    name: "Know Your Time",
+    short_name: "Know your time",
+    description: "An app that can show your local time",
     icons: [
       {
         src: "/android-chrome-192x192.png",
@@ -47,7 +47,7 @@ const manifestForPlugin: Partial<VitePWAOptions> = {
 export default defineConfig(({ command, mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
   return {
-    plugins: [react()],
+    plugins: [react(), VitePWA(manifestForPlugin)],
     server: {
       host: true,
     },
